@@ -1,0 +1,20 @@
+PUT localhost/9200/index_to_define
+{
+	"settings": {
+    	"number_of_shards": 1,
+    	"number_of_replicas": 1
+	},
+   "mappings": {
+       "properties": {
+         "title": {
+               "type": "text"
+         },
+         "author": {
+               "type": "text"      
+         },
+         "abstract": {
+               "type": "text"
+         }
+     }
+   }
+}

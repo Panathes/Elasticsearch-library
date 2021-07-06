@@ -1,0 +1,8 @@
+POST /index_to_define/_bulk
+{ "index":{"_index": "to_define" } }
+{ "title":"Clean Code: A Handbook of Agile Software Craftsmanship","author":"Robert C. Martin", "abstract":"Even bad code can function. But if code isn’t clean, it can bring a development organization to its knees..." }
+{ "title":"The Pragmatic Programmer: your journey to mastery, 20th Anniversary Edition","author":"David Thomas", "abstract":"Dave Thomas and Andy Hunt wrote the first edition of this influential book in 1999..." }
+{ "title":"Les Thanatonautes","author":"Bernard Werber", "abstract":"L'homme a tout exploré : le monde de l'espace, le monde sous-marin.." }
+{ "title":"La Nuit des temps","author":"René Barjavel", "abstract":"L'Antarctique. À la tête d'une mission scientifique française, le professeur Simon fore la glace..." }
+
+
