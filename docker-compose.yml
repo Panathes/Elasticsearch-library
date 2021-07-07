@@ -44,7 +44,7 @@ services:
       DB_USER: "user"
       FRONT_URL: "http://localhost"
       DOCUMENTATION_URL: "http://localhost:8085"
-      PORT: ":8080"
+      PORT: "8080"
     ports:
       - 8080:8080
     networks:

@@ -1,20 +1,21 @@
 package server
 
 import (
-	"github.com/gorilla/mux"
-	"github.com/rs/cors"
 	"log"
 	"net/http"
 	"os"
+
+	"github.com/gorilla/mux"
+	"github.com/rs/cors"
 )
 
 type Server struct {
 	Router 	*mux.Router
-	Logger 	*log.Logger
 }
 
 func (s *Server) Run() *Server {
-
+	s.Router = mux.NewRouter()
+	s.InitialiseRoutes()
 	c := cors.New(cors.Options{
 		AllowedOrigins: []string{os.Getenv("FRONT_URL"), os.Getenv("DOCUMENTATION_URL")},
 		AllowedHeaders: []string{"Authorization", "Content-Type", "accept"},
@@ -23,8 +24,8 @@ func (s *Server) Run() *Server {
 		Debug: false,
 	})
 	handler := c.Handler(s.Router)
-	// defer s.DB.Close()
-	err := http.ListenAndServe(os.Getenv("PORT"), handler)
+
+	err := http.ListenAndServe(":"+os.Getenv("PORT"), handler)
 	if err != nil {
 		log.Fatal("ListenAndServe: ", err)
 	}
