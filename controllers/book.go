@@ -59,5 +59,4 @@ func (c *Controller) GetBook(w http.ResponseWriter, r *http.Request) {
 	resp := books.GetBook(&author, &title, &abstract)
 	c.WriteJson(w, resp)
 
-	// b, _ := c.Db.GetBook(&author, &title, &abstract)
 }
