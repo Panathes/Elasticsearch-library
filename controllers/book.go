@@ -2,11 +2,12 @@ package controllers
 
 import (
 	"encoding/json"
+	"io/ioutil"
+	"net/http"
+
 	"github.com/Elasticsearch-library/models"
 	u "github.com/Elasticsearch-library/utils"
 	"github.com/elastic/go-elasticsearch"
-	"io/ioutil"
-	"net/http"
 )
 
 type Controller struct {
@@ -42,4 +43,21 @@ func (c *Controller) CreateBook(w http.ResponseWriter, r *http.Request) {
 	}
 	resp := books.AddBook()
 	c.WriteJson(w, resp)
+}
+
+func (c *Controller) GetBook(w http.ResponseWriter, r *http.Request) {
+
+	books := models.Elastic{
+		Es: c.Es,
+		Book: models.Books{},
+	}
+
+	author := r.FormValue("author")
+	title := r.FormValue("title")
+	abstract := r.FormValue("abstract")
+
+	resp := books.GetBook(&author, &title, &abstract)
+	c.WriteJson(w, resp)
+
+	// b, _ := c.Db.GetBook(&author, &title, &abstract)
 }

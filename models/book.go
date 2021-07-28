@@ -2,10 +2,11 @@ package models
 
 import (
 	"context"
-	"github.com/elastic/go-elasticsearch"
-	"github.com/elastic/go-elasticsearch/esapi"
 	"log"
 	"strings"
+
+	"github.com/elastic/go-elasticsearch"
+	"github.com/elastic/go-elasticsearch/esapi"
 )
 
 type Books struct {
@@ -45,6 +46,38 @@ func (e *Elastic) AddBook() *esapi.Response {
 
 	if res.IsError() {
 		log.Printf("[%s] Error indexing document ID=%d", res.Status())
+	}
+
+	return res
+}
+
+func Request(author *string, title *string, abstract *string) string  {
+	str := ""
+	if *author != "" {
+		str += "author: " + *author + ", "
+	}
+	if *title != "" {
+		str += "title: " + *title + ", "
+	}
+	if  *abstract != "" {
+		str += "abstract: " + *abstract + ", "
+	}
+	return str
+}
+
+func (e *Elastic) GetBook(author *string, title *string, abstract *string) *esapi.Response {
+	res, err := e.Es.Search(
+		e.Es.Search.WithContext(context.Background()),
+		e.Es.Search.WithIndex("books"),
+		e.Es.Search.WithQuery(Request(author, title, abstract)),
+	)
+	if err != nil {
+		log.Fatalf("Error getting response: %s", err)
+	}
+	defer res.Body.Close()
+
+	if res.IsError() {
+		log.Fatalf("Error getting response")
 	}
 
 	return res

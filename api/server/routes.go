@@ -1,8 +1,9 @@
 package server
 
 import (
-	"github.com/Elasticsearch-library/controllers"
 	"net/http"
+
+	"github.com/Elasticsearch-library/controllers"
 
 	"github.com/gorilla/mux"
 )
@@ -15,5 +16,5 @@ func (s *Server) InitialiseRoutes(controller *controllers.Controller) {
 	s.Router = mux.NewRouter()
 	s.Router.HandleFunc("/", Home).Methods("GET")
 	s.Router.HandleFunc("/", controller.CreateBook).Methods("POST")
-	// s.Router.HandleFunc("/book", GetBook).Methods("GET")
+	s.Router.HandleFunc("/book", controller.GetBook).Methods("GET")
 }
