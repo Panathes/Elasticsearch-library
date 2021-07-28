@@ -21,12 +21,11 @@
 |       └─ routes.go
 |       └─ server.go
 ├─ controllers/
-├─ documentation/
-|   └─ swagger.json
-├─ middleware/
+|       └─ book.go
 ├─ models/
+|       └─ book.go
 ├─ utils/
-├─ view/
+|       └─ util.go
 ├─ docker-compose.yml
 ├─ main.go
 └─ README.md

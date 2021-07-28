@@ -1,0 +1,56 @@
+version: '3'
+
+services:
+  es:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.13.2
+    container_name: es
+    environment:
+      - node.name=es
+      - cluster.name=es-docker-cluster
+      - cluster.initial_master_nodes=es
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    volumes:
+      - ./dataes:/usr/share/elasticsearch/data
+    ports:
+      - 9200:9200
+    networks:
+      - elastic
+
+  kibana:
+    image: docker.elastic.co/kibana/kibana:7.13.2
+    container_name: kib
+    ports:
+      - 5601:5601
+    environment:
+      ELASTICSEARCH_URL: http://es:9200
+      ELASTICSEARCH_HOSTS: '["http://es:9200"]'
+    networks:
+      - elastic
+
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    environment:
+      DATABASE_URL: database
+      JWT_SECRET: "QgTPVshDVPqqcNMvinBd8vWhGJ8i7udr"
+      DB_PASSWORD: "CvUuM6YK3YVveTYc2McSUvkSxRRkFEJn"
+      DB_USER: "user"
+      FRONT_URL: "http://localhost"
+      DOCUMENTATION_URL: "http://localhost:8085"
+      PORT: "8080"
+    ports:
+      - 8080:8080
+    networks:
+      - elastic
+
+networks:
+  elastic:
+    driver: bridge
+
