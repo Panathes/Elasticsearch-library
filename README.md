@@ -15,7 +15,7 @@
 ## Directory Structure
 
 ```
-<Wiki-Go>/
+<Elasticsearch-library>/
 ├─ api/
 |   └─ server/
 |       └─ routes.go
